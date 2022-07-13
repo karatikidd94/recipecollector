@@ -6,12 +6,13 @@
 {% for recipe in recipes %}
   <div class="card">
     <div class="card-content">
-      <span class="card-title">{{ recipe.title }}</span>
-      <p>Meal: {{ recipe.meal }}</p>
-      <p>length: {{ recipe.length }}</p>
-      <p>Ingredients: {{ recipe.ingredients }}</p>
-      <p>Directions: {{ recipe.directions }}</p>
+    <span class="card-title">{{ recipe.title }}</span>
+    <p>Meal: {{ recipe.meal }}</p>
+    <p>length: {{ recipe.length }}</p>
+    <p>Ingredients: {{ recipe.ingredients }}</p>
+    <p>Directions: {{ recipe.directions }}</p>
     </div>
+    <a class="stretched-link" href="/recipes/{{ cat.id }}"></a>
   </div>
 {% endfor %}
 
