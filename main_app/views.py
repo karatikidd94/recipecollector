@@ -1,6 +1,8 @@
-from django.shortcuts import render
-from .models import Recipe
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from .models import Recipe
+from .forms import MessagingForm
 
 # class Recipe:  # Note that parens are optional if not inheriting from another class
 #     def __init__(self, title, meal, length, ingredients, directions):
@@ -29,4 +31,29 @@ def recipes_index(request):
 
 def recipes_detail(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
-    return render(request, 'recipes/detail.html', { 'recipe': recipe})
+    messaging_form = MessagingForm()
+    return render(request, 'recipes/detail.html', {
+        'recipe': recipe, 'messaging_form': messaging_form
+    })
+
+def add_messaging(request, recipe_id):
+    form = MessagingForm(request.POST)
+    if form.is_valid():
+        new_messaging = form.save(commit=False)
+        new_messaging.recipe_id = recipe_id
+        new_messaging.save()
+    return redirect('detail', recipe_id=recipe_id)
+
+class RecipeCreate(CreateView):
+    model = Recipe
+    fields = '__all__'
+    success_url = '/recipes/'
+    # fields = ['title', 'meal', 'length', 'ingredients', 'directions']
+
+class RecipeUpdate(UpdateView):
+    model = Recipe
+    fields = ['title', 'meal', 'length', 'ingredients', 'directions']
+
+class RecipeDelete(DeleteView):
+    model = Recipe
+    success_url = '/recipes/'

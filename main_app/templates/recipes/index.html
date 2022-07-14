@@ -12,7 +12,7 @@
     <p>Ingredients: {{ recipe.ingredients }}</p>
     <p>Directions: {{ recipe.directions }}</p>
     </div>
-    <a class="stretched-link" href="/recipes/{{ cat.id }}"></a>
+    <a class="stretched-link" href="{% url 'detail' recipe.id %}"></a>
   </div>
 {% endfor %}
 
